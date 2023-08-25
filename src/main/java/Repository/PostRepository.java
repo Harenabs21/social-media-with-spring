@@ -3,6 +3,7 @@ package Repository;
 import Model.Post;
 import Model.User;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -22,7 +23,7 @@ public class PostRepository extends GenericRepository<Post> {
         super(connection);
     }
     @Override
-    public void insert(Post toInsert) throws SQLException {
+    public void insert(@NotNull Post toInsert) throws SQLException {
         String sql = "INSERT INTO post(id_account,posting_date,posting_time,post_content,post_photo) VALUES(?,?,?,?,?) ";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, toInsert.getId_account().getId());
@@ -89,7 +90,7 @@ public class PostRepository extends GenericRepository<Post> {
         }
     }
 
-    private Post extractPostFromResultSet(ResultSet resultSet) throws SQLException{
+    private Post extractPostFromResultSet(@NotNull ResultSet resultSet) throws SQLException{
         int postId = resultSet.getInt("id");
         LocalDate postingDate = resultSet.getDate("posting_date").toLocalDate();
         LocalTime postingTime = resultSet.getTime("posting_time").toLocalTime();

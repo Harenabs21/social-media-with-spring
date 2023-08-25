@@ -3,6 +3,7 @@ package Repository;
 import Model.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Repository
-public class UserRepository extends GenericRepository<User> {
+public class UserRepository extends GenericRepository<User>{
     private User myUser;
     public UserRepository(Connection connection){
         super(connection);
@@ -30,7 +31,7 @@ public class UserRepository extends GenericRepository<User> {
     @Override
     public List<User> findAll() {
         List<User> AllUsers = new ArrayList<>();
-        String sql = "SELECT id, nickname, first_name, last_name, birthday, gender, profile_picture FROM account";
+        String sql = "SELECT * FROM account";
         try {
             ResultSet resultSet;
             try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
@@ -56,7 +57,7 @@ public class UserRepository extends GenericRepository<User> {
         }
     }
 
-    private void Extract( PreparedStatement statement) throws SQLException {
+    private void Extract(@NotNull PreparedStatement statement) throws SQLException {
         statement.setString(1,myUser.getFirstName());
         statement.setString(2,myUser.getLastName());
         statement.setDate(3, Date.valueOf(myUser.getBirthday()));
@@ -94,7 +95,8 @@ public class UserRepository extends GenericRepository<User> {
         }
     }
 
-    private User extractUserFromResultSet(ResultSet resultSet) throws SQLException{
+    @org.jetbrains.annotations.NotNull
+    private User extractUserFromResultSet(@NotNull ResultSet resultSet) throws SQLException{
         int id = resultSet.getInt("id");
         String firstName = resultSet.getString("first_name");
         String lastName = resultSet.getString("last_name");
@@ -102,7 +104,9 @@ public class UserRepository extends GenericRepository<User> {
         LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
         char gender = resultSet.getString("gender").charAt(0);
         String profilePicture = resultSet.getString("profile_picture");
-        return new User(id, firstName, lastName, nickname, birthday, gender, profilePicture);
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        return new User(id, firstName, lastName, nickname, birthday, gender, profilePicture,email,password);
     }
 
     public static void main(String[] args) {
