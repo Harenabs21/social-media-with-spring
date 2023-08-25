@@ -5,6 +5,6 @@ This repository contains my final exam project about social media.
 - **CRUD Operations**: The project focuses on the essential Create, Read, Update, and Delete (CRUD) operations
 ## MCD
 - MCD version 1
-![mcd v1](/src/main/resources/mcd/MCD v1.png)
+![mcd v1](src/main/resources/mcd/MCD_v1.png)
 - MCD version 2
-![MCD V2](/src/main/resources/mcd/MCD social media.png)
+![MCD V2](src/main/resources/mcd/MCD_social_media.png)
