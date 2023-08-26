@@ -16,7 +16,7 @@ public abstract class GenericRepository<T> {
     public abstract List<T> findAll() throws SQLException;
 
 
-    public abstract void updateById(int id) throws SQLException;
+    public abstract void updateById(int id,T object) throws SQLException;
 
 
 
