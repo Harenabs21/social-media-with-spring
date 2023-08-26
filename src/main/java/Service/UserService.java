@@ -37,10 +37,29 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
-    public void updateUser(int id) throws SQLException {
-        if(userRepository.findById(id).isEmpty()){
+    public void updateUser(int id, User user) throws SQLException {
+        Optional<User> existingUserOptional = userRepository.findById(id);
+        if(existingUserOptional.isEmpty()){
             System.out.println("user doesn't exist");
         }
-        userRepository.updateById(id);
+        else{
+            User existingUser = existingUserOptional.get();
+            if(user.getFirstName() != null){
+                existingUser.setFirstName(user.getFirstName());
+            }
+            if(user.getLastName() != null){
+                existingUser.setLastName(user.getLastName());
+            }
+            if(user.getProfilePicture() != null){
+                existingUser.setProfilePicture(user.getProfilePicture());
+            }
+            if(user.getNickname() != null){
+                existingUser.setNickname(user.getNickname());
+            }
+            if(user.getPassword() != null){
+                existingUser.setPassword(user.getPassword());
+            }
+            userRepository.updateById(id,existingUser);
+        }
     }
 }

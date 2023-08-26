@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public class UserRepository extends GenericRepository<User>{
-    private User myUser;
     public UserRepository(Connection connection){
         super(connection);
     }
@@ -20,7 +19,7 @@ public class UserRepository extends GenericRepository<User>{
     public void insert(User toInsert) throws SQLException {
         String sql = "INSERT INTO account(first_name,last_name,birthday,gender,profile_picture,nickname,email,password) VALUES (?,?,?,?,?,?,?,?)";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
-            Extract(statement);
+            Extract(statement,toInsert);
             statement.executeUpdate();
         }
     }
@@ -45,24 +44,28 @@ public class UserRepository extends GenericRepository<User>{
     }
 
     @Override
-    public void updateById(int id) throws SQLException {
-        String sql = "UPDATE account SET first_name = ?, last_name = ?, birthday = ?, gender = ?, profile_picture = ?, nickname = ? ,email = ?, password = ? WHERE id = ?";
+    public void updateById(int id, User object) throws SQLException {
+        String sql = "UPDATE account SET first_name = ?, last_name = ?, profile_picture = ?, nickname = ? , password = ? WHERE id = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
-            Extract(statement);
-            statement.setInt(9,id);
+            statement.setString(1,object.getFirstName());
+            statement.setString(2,object.getLastName());
+            statement.setString(3,object.getProfilePicture());
+            statement.setString(4,object.getNickname());
+            statement.setString(5,object.getPassword());
+            statement.setInt(6,id);
             statement.executeUpdate();
         }
     }
 
-    private void Extract(@NotNull PreparedStatement statement) throws SQLException {
-        statement.setString(1,myUser.getFirstName());
-        statement.setString(2,myUser.getLastName());
-        statement.setDate(3, Date.valueOf(myUser.getBirthday()));
-        statement.setString(4, String.valueOf(myUser.getGender()));
-        statement.setString(5,myUser.getProfilePicture());
-        statement.setString(6,myUser.getNickname());
-        statement.setString(7,myUser.getEmail());
-        statement.setString(8,myUser.getPassword());
+    private void Extract(@NotNull PreparedStatement statement, User object) throws SQLException {
+        statement.setString(1,object.getFirstName());
+        statement.setString(2,object.getLastName());
+        statement.setDate(3, Date.valueOf(object.getBirthday()));
+        statement.setString(4, String.valueOf(object.getGender()));
+        statement.setString(5,object.getProfilePicture());
+        statement.setString(6,object.getNickname());
+        statement.setString(7,object.getEmail());
+        statement.setString(8,object.getPassword());
     }
 
 
