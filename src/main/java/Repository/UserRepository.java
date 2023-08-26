@@ -1,8 +1,6 @@
 package Repository;
 
 import Model.User;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Repository
 public class UserRepository extends GenericRepository<User>{
     private User myUser;
@@ -31,7 +28,7 @@ public class UserRepository extends GenericRepository<User>{
     @Override
     public List<User> findAll() {
         List<User> AllUsers = new ArrayList<>();
-        String sql = "SELECT * FROM account";
+        String sql = "SELECT * FROM user_info";
         try {
             ResultSet resultSet;
             try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
@@ -71,7 +68,7 @@ public class UserRepository extends GenericRepository<User>{
 
     @Override
     public Optional<User> findById(int id) throws SQLException {
-        String sql = "SELECT id, nickname, first_name, last_name, birthday, gender, profile_picture FROM account WHERE id = ?";
+        String sql = "SELECT * FROM user_info WHERE id = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
             statement.setInt(1,id);
             try {
@@ -104,18 +101,7 @@ public class UserRepository extends GenericRepository<User>{
         LocalDate birthday = resultSet.getDate("birthday").toLocalDate();
         char gender = resultSet.getString("gender").charAt(0);
         String profilePicture = resultSet.getString("profile_picture");
-        String email = resultSet.getString("email");
-        String password = resultSet.getString("password");
-        return new User(id, firstName, lastName, nickname, birthday, gender, profilePicture,email,password);
-    }
-
-    public static void main(String[] args) {
-        UserRepository userRepository =new UserRepository();
-        List<User> allUsers = userRepository.findAll();
-
-        for (User user : allUsers) {
-            System.out.println(user);
-        }
+        return new User(id, firstName, lastName, nickname, birthday, gender, profilePicture);
     }
 }
 

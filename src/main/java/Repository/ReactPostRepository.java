@@ -3,15 +3,16 @@ import Model.Post;
 import Model.ReactPost;
 import Model.User;
 import lombok.*;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.Optional;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
+
+@Repository
 public class ReactPostRepository extends SpecificRepository<ReactPost>{
     private ReactPost reacts;
+    public ReactPostRepository(Connection connection){super(connection);}
     public Optional<ReactPost> getAllReactions(int id) throws SQLException{
         String sql = "SELECT * FROM react_post WHERE id_post = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
