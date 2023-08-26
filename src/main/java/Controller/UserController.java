@@ -28,8 +28,8 @@ public class UserController {
         userService.addNewUser(user);
     }
     @PutMapping("/{id}")
-    public void updateUserById(@PathVariable int id) throws SQLException {
-        userService.updateUser(id);
+    public void updateUserById(@PathVariable int id, @RequestBody User user) throws SQLException {
+        userService.updateUser(id,user);
     }
     @DeleteMapping ("/{id}")
     public void deleteUserById(@PathVariable int id) throws SQLException {
