@@ -28,8 +28,8 @@ public class PostController {
         postService.addNewPost(post);
     }
     @PutMapping("/{id}")
-    public void updatePost(@PathVariable int id) throws SQLException {
-        postService.updatePost(id);
+    public void updatePost(@PathVariable int id,@RequestBody Post post) throws SQLException {
+        postService.updatePost(id,post);
     }
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable int id) throws SQLException {
