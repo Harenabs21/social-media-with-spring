@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @ToString
 public class Post {
     private int id_post;
-    private User id_account;
+    private int id_account;
     private LocalDate postingDate;
     private LocalTime postingTime;
     private String postContent;
