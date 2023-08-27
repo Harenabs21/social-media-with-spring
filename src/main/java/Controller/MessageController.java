@@ -22,7 +22,7 @@ public class MessageController {
     public void sendNewMessage(Message message) throws SQLException {
         messageService.sendMessage(message);
     }
-    @PutMapping
+    @PutMapping("/seen/")
     public void changeSeenDatetime(@RequestParam int idSender,@RequestParam  int idReceiver) throws SQLException {
         messageService.UpdateSeenDatetime(idSender, idReceiver);
     }
