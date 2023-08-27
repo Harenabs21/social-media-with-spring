@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 public class ReactPost {
-    private User idUser;
-    private Post idPost;
+    private int idUser;
+    private int idPost;
     private String reactionType;
     private Timestamp reactionDatetime;
 }
