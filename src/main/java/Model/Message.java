@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 public class Message {
-    private User accountSender;
-    private User accountReceiver;
+    private int accountSender;
+    private int accountReceiver;
     private Timestamp messageDatetime;
     private String messageContent;
     private Timestamp seenDatetime;
