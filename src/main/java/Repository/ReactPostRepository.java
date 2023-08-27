@@ -1,19 +1,14 @@
 package Repository;
-import Model.Post;
 import Model.ReactPost;
-import Model.User;
-import lombok.*;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
 public class ReactPostRepository extends SpecificRepository<ReactPost>{
-    private ReactPost reacts;
     public ReactPostRepository(Connection connection){super(connection);}
     public List<ReactPost> getAllReactions(int idPost) throws SQLException{
         List<ReactPost> allReactions = new ArrayList<>(0);
