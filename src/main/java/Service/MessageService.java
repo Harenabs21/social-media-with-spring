@@ -15,29 +15,26 @@ import java.util.List;
 @Service
 public class MessageService {
     private MessageRepository messageRepository;
-    public List<Message> displayMessagesBetweenTwoUser(Message sender, Message receiver) throws SQLException {
-        if(sender.getAccountSender().getId() == receiver.getAccountReceiver().getId()){
+    public List<Message> displayMessagesBetweenTwoUser(int sender, int receiver) throws SQLException {
+        if(sender == receiver){
             System.out.println("the id cannot be the same");
         }
-        return messageRepository.findAllMessagesBetweenUser(sender,receiver);
+        return messageRepository.AllMessageBetweenTwoUsers(sender,receiver);
     }
     public void sendMessage(Message insert) throws SQLException {
-        if(insert.getAccountSender().getId() == insert.getAccountReceiver().getId()){
+        if(insert.getAccountSender() == insert.getAccountReceiver()){
             System.out.println("the id cannot be the same");
         }
-        messageRepository.insertNewContent(insert);
+        messageRepository.insertNewMessage(insert);
     }
-   public void UpdateSeenDatetime(Message message) throws SQLException {
-       if(message.getAccountSender().getId() == message.getAccountReceiver().getId()){
+   public void UpdateSeenDatetime(int sender, int receiver) throws SQLException {
+       if(sender == receiver){
            System.out.println("the id cannot be the same");
        }
-       messageRepository.updateByID(message);
+       messageRepository.updateById(sender,receiver);
    }
-   public void deleteMessage(Message message) throws SQLException{
+   public void deleteMessage(int idUser) throws SQLException{
 
-       if(message.getAccountSender().getId() == message.getAccountReceiver().getId()){
-           System.out.println("the id cannot be the same");
-       }
-       messageRepository.deleteByID(message);
+       messageRepository.deleteMessageById(idUser);
    }
 }
