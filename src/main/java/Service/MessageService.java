@@ -10,7 +10,6 @@ import java.util.List;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Service
 public class MessageService {
