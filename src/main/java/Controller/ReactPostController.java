@@ -27,7 +27,7 @@ public class ReactPostController {
         reactPostService.updateReactionOfPost(userId,postId,newReaction);
     }
     @DeleteMapping("/")
-    public void deleteReaction(int userId, int postId) throws SQLException {
+    public void deleteReaction(@RequestParam int userId,@RequestParam int postId) throws SQLException {
         reactPostService.deleteReactionOfPost(userId,postId);
     }
 }
