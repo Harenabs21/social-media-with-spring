@@ -41,10 +41,10 @@ public class ReactPostRepository extends SpecificRepository<ReactPost>{
     }
 
     @Override
-    public void updateReactions(int idUser, int idPost, String newReaction) throws SQLException {
+    public void updateReactions(int idUser, int idPost, ReactPost newReaction) throws SQLException {
         String sql = "UPDATE react_post SET reaction_type = ? WHERE id_post = ? AND id_account = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
-            statement.setString(1,newReaction);
+            statement.setString(1,newReaction.getReactionType());
             statement.setInt(2,idPost);
             statement.setInt(3,idUser);
             statement.executeUpdate();

@@ -23,7 +23,7 @@ public class ReactPostController {
         reactPostService.addNewReaction(reactions);
     }
     @PutMapping("/update/")
-    public void changeReactions(@RequestParam int userId, @RequestParam int postId, @RequestBody String newReaction) throws SQLException {
+    public void changeReactions(@RequestParam int userId, @RequestParam int postId, @RequestBody ReactPost newReaction) throws SQLException {
         reactPostService.updateReactionOfPost(userId,postId,newReaction);
     }
     @DeleteMapping("/")

@@ -31,14 +31,14 @@ public class ReactPostService {
    public List<ReactPost> displayReactionsOfPost(int id) throws SQLException{
        return reactPostRepository.getAllReactions(id);
    }
-   public void updateReactionOfPost(int userId, int postId, String newReaction) throws SQLException {
+   public void updateReactionOfPost(int userId, int postId, ReactPost newReaction) throws SQLException {
 
         Optional<User> user = userRepository.findById(userId);
         Optional<Post> post = postRepository.findById(postId);
         if(user.isEmpty() || post.isEmpty()){
             System.out.println("the user or post doesn't exist");
         }
-        if(!reactions.contains(newReaction)){
+        if(!reactions.contains(newReaction.getReactionType())){
             System.out.println("invalid reactions");
         }
         reactPostRepository.updateReactions(userId,postId,newReaction);
