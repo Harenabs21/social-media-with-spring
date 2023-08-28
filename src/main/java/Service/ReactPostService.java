@@ -21,8 +21,8 @@ public class ReactPostService {
     private ReactPostRepository reactPostRepository;
     private UserRepository userRepository;
     private PostRepository postRepository;
-    List<String> reactions = Arrays.asList("like","love","haha","wow","who cares?");
     public void addNewReaction(ReactPost insert) throws SQLException {
+        List<String> reactions = Arrays.asList("like","love","haha","wow","who cares?");
         if(!reactions.contains(insert.getReactionType())){
             System.out.println("invalid reactions");
         }
@@ -32,7 +32,7 @@ public class ReactPostService {
        return reactPostRepository.getAllReactions(id);
    }
    public void updateReactionOfPost(int userId, int postId, ReactPost newReaction) throws SQLException {
-
+        List<String> reactions = Arrays.asList("like","love","haha","wow","who cares?");
         Optional<User> user = userRepository.findById(userId);
         Optional<Post> post = postRepository.findById(postId);
         if(user.isEmpty() || post.isEmpty()){
