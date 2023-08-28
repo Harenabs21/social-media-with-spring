@@ -56,9 +56,6 @@ public class UserService {
             if(user.getNickname() != null){
                 existingUser.setNickname(user.getNickname());
             }
-            if(user.getPassword() != null){
-                existingUser.setPassword(user.getPassword());
-            }
             userRepository.updateById(id,existingUser);
         }
     }

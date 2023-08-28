@@ -45,14 +45,13 @@ public class UserRepository extends GenericRepository<User>{
 
     @Override
     public void updateById(int id, User object) throws SQLException {
-        String sql = "UPDATE account SET first_name = ?, last_name = ?, profile_picture = ?, nickname = ? , password = ? WHERE id = ?";
+        String sql = "UPDATE account SET first_name = ?, last_name = ?, profile_picture = ?, nickname = ?  WHERE id = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
             statement.setString(1,object.getFirstName());
             statement.setString(2,object.getLastName());
             statement.setString(3,object.getProfilePicture());
             statement.setString(4,object.getNickname());
-            statement.setString(5,object.getPassword());
-            statement.setInt(6,id);
+            statement.setInt(5,id);
             statement.executeUpdate();
         }
     }
