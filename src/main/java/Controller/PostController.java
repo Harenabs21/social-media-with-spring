@@ -19,9 +19,13 @@ public class PostController {
     public List<Post> listOfAllPost() throws SQLException {
         return postService.displayAllPosts();
     }
-    @GetMapping("/{id}")
-    public Optional<Post> PostById(@PathVariable int id) throws SQLException {
+    @GetMapping("user/{id}")
+    public Optional<Post> PostByIdUser(@PathVariable int id) throws SQLException {
         return postService.displayPostOfUser(id);
+    }
+    @GetMapping("/{id}")
+    public Optional<Post> displayPostByHisId(@PathVariable int id) throws SQLException{
+        return postService.getByIdPost(id);
     }
     @PostMapping
     public void NewPost(@RequestBody Post post) throws SQLException {
