@@ -55,16 +55,18 @@ public class PostRepository extends GenericRepository<Post> {
             statement.executeUpdate();
         }
     }
-    public Optional<Post> findByIdPost(int id) throws SQLException{
+    public List<Post> findByIdAccount(int id) throws SQLException{
+        List<Post> AllPostOfUser = new ArrayList<>();
         String sql = "SELECT * FROM post WHERE id = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
             statement.setInt(1,id);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                return Optional.of(extractPostFromResultSet(resultSet));
+            while(resultSet.next()){
+                Post posts = extractPostFromResultSet(resultSet);
+                AllPostOfUser.add(posts);
             }
         }
-        return Optional.empty();
+        return AllPostOfUser;
     }
 
 
