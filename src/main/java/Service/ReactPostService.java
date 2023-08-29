@@ -46,4 +46,17 @@ public class ReactPostService {
    public void deleteReactionOfPost(int userId, int postId) throws SQLException{
         reactPostRepository.deleteByID(userId,postId);
    }
+   public void deleteReactionOfUser(int userId) throws SQLException{
+       Optional<User> user = userRepository.findById(userId);
+       if(user.isEmpty()){
+           throw new IllegalArgumentException("User with id"+userId+"does not exist");
+       }
+       reactPostRepository.deleteByIdUser(userId);
+   }
+   public void deleteReactionsOfPost(int postId) throws SQLException{
+       Optional<Post> post = postRepository.findById(postId);
+       if(post.isEmpty()){
+           throw new IllegalArgumentException("User with id"+postId+"does not exist");
+       }
+   }
 }
