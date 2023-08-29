@@ -30,4 +30,12 @@ public class ReactPostController {
     public void deleteReaction(@RequestParam int userId,@RequestParam int postId) throws SQLException {
         reactPostService.deleteReactionOfPost(userId,postId);
     }
+    @DeleteMapping("delete user/{userId}")
+    public void deleteAllReactionsOfGivenUser(@PathVariable int userId) throws SQLException{
+        reactPostService.deleteReactionOfUser(userId);
+    }
+    @DeleteMapping("delete post/{postId}")
+    public void deleteAllReactionsOfGivenPost(@PathVariable int postId) throws SQLException{
+        reactPostService.deleteReactionsOfPost(postId);
+    }
 }
