@@ -61,6 +61,23 @@ public class ReactPostRepository extends SpecificRepository<ReactPost>{
         }
     }
 
+    @Override
+    public void deleteByIdUser(int idUser) throws SQLException {
+        String sql = "DELETE FROM react_post WHERE id_account = ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)){
+            statement.setInt(1,idUser);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void deleteByIdPost(int idPost) throws SQLException {
+        String sql = "DELETE FROM react_post WHERE id_post = ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)){
+            statement.setInt(1,idPost);
+            statement.executeUpdate();
+        }
+    }
 
 
 }
