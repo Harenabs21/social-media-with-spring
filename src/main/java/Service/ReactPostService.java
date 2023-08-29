@@ -24,7 +24,7 @@ public class ReactPostService {
     public void addNewReaction(ReactPost insert) throws SQLException {
         List<String> reactions = Arrays.asList("like","love","haha","wow","who cares?");
         if(!reactions.contains(insert.getReactionType())){
-            System.out.println("invalid reactions");
+            throw new IllegalArgumentException("invalid reactions");
         }
         reactPostRepository.insertNewContent(insert);
     }
@@ -36,10 +36,10 @@ public class ReactPostService {
         Optional<User> user = userRepository.findById(userId);
         Optional<Post> post = postRepository.findById(postId);
         if(user.isEmpty() || post.isEmpty()){
-            System.out.println("the user or post doesn't exist");
+            throw new ResourceNotFoundException("User not found with id"+userId+"and post not found with id"+postId);
         }
         if(!reactions.contains(newReaction.getReactionType())){
-            System.out.println("invalid reactions");
+            throw new IllegalArgumentException("invalid reactions");
         }
         reactPostRepository.updateReactions(userId,postId,newReaction);
    }
