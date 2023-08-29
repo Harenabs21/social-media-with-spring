@@ -13,7 +13,9 @@ CREATE TABLE account (
     password    VARCHAR(200) NOT NULL,
     profile_picture VARCHAR(200) DEFAULT 'default.png'
 );
-
+ALTER SEQUENCE account_id_seq RESTART WITH 1;
+ALTER TABLE account ALTER COLUMN id SET DEFAULT nextval('account_id_seq');
+CREATE VIEW user_info AS SELECT id, first_name,last_name,nickname,birthday,profile_picture FROM account;
 
 CREATE TABLE message (
     id_account_sender   INT REFERENCES account(id),
@@ -32,7 +34,8 @@ CREATE TABLE post (
     post_photo VARCHAR(100) DEFAULT null,
     id_account   INT REFERENCES account(id)
 );
-
+ALTER SEQUENCE post_id_seq RESTART WITH 1;
+ALTER TABLE post ALTER COLUMN id SET DEFAULT nextval('post_id_seq');
 CREATE TABLE react_post (
     id_account        INT REFERENCES account(id),
     id_post           INT REFERENCES post(id),
