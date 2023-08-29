@@ -16,4 +16,7 @@ public abstract class SpecificRepository<T> {
     public abstract void insertNewContent (T insert) throws SQLException;
     public abstract void updateReactions(int idUser,int idPost, ReactPost newReaction) throws SQLException;
     public abstract void deleteByID(int idUser,int idPost) throws SQLException;
+    public abstract void deleteByIdUser(int idUser) throws SQLException;
+    public abstract void deleteByIdPost(int idPost) throws SQLException;
+
 }
