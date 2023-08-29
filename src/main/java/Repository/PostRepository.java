@@ -91,6 +91,13 @@ public class PostRepository extends GenericRepository<Post> {
             statement.executeUpdate();
         }
     }
+    public void deleteByIdUser(int id)throws SQLException{
+        String sql = "DELETE FROM post WHERE id_account = ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)){
+            statement.setInt(1,id);
+            statement.executeUpdate();
+        }
+    }
 
     private Post extractPostFromResultSet(@NotNull ResultSet resultSet) throws SQLException{
         int postId = resultSet.getInt("id");
