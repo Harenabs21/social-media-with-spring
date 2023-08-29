@@ -55,7 +55,14 @@ public class UserRepository extends GenericRepository<User>{
             statement.executeUpdate();
         }
     }
-
+    public void updatePassword(int id, User user) throws SQLException{
+        String sql = "UPDATE account SET password = ? WHERE id = ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)){
+            statement.setString(1,user.getPassword());
+            statement.setInt(2,id);
+            statement.executeUpdate();
+        }
+    }
     private void Extract(@NotNull PreparedStatement statement, User object) throws SQLException {
         statement.setString(1,object.getFirstName());
         statement.setString(2,object.getLastName());

@@ -65,4 +65,17 @@ public class UserService {
             userRepository.updateById(id,existingUser);
         }
     }
+    public void updatePasswordById(int id, User user) throws SQLException{
+        Optional<User> existingUserOptional = userRepository.findById(id);
+        if(existingUserOptional.isEmpty()){
+            throw new ResourceNotFoundException("User not found with id"+id);
+        }
+        else{
+            User existingUser = existingUserOptional.get();
+            if(user.getPassword() != null){
+                existingUser.setPassword(user.getPassword());
+            }
+            userRepository.updatePassword(id,user);
+        }
+    }
 }

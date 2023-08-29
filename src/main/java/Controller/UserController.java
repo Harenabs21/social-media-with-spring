@@ -31,6 +31,10 @@ public class UserController {
     public void updateUserById(@PathVariable int id, @RequestBody User user) throws SQLException {
         userService.updateUser(id,user);
     }
+    @PutMapping("/change password/{id}")
+    public void changePassword(@PathVariable int id, @RequestBody User user) throws SQLException{
+        userService.updatePasswordById(id,user);
+    }
     @DeleteMapping ("/{id}")
     public void deleteUserById(@PathVariable int id) throws SQLException {
         userService.deleteUser(id);
