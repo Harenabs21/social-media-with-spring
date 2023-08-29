@@ -2,6 +2,9 @@ package Service;
 
 
 import Model.User;
+import Repository.MessageRepository;
+import Repository.PostRepository;
+import Repository.ReactPostRepository;
 import Repository.UserRepository;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -11,14 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 
-
+@AllArgsConstructor
 @Getter
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    private final PostRepository postRepository;
+    private final MessageRepository messageRepository;
+    private final ReactPostRepository reactPostRepository;
     public List<User> displayAllUsers(){
         return userRepository.findAll();
     }
@@ -35,6 +38,9 @@ public class UserService {
         if(userRepository.findById(id).isEmpty()){
             throw new ResourceNotFoundException("User not found with id"+id);
         }
+        reactPostRepository.deleteByIdUser(id);
+        messageRepository.deleteMessageById(id);
+
         userRepository.deleteById(id);
     }
     public void updateUser(int id, User user) throws SQLException {
