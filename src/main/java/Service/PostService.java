@@ -68,6 +68,7 @@ public class PostService {
         if(user.isEmpty()){
             throw new ResourceNotFoundException("User not found with id"+id);
         }
+         reactPostRepository.deleteByIdPost(id);
          postRepository.deleteByIdUser(id);
     }
 }
