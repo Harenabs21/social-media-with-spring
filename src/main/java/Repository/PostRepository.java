@@ -55,7 +55,17 @@ public class PostRepository extends GenericRepository<Post> {
             statement.executeUpdate();
         }
     }
-
+    public Optional<Post> findByIdPost(int id) throws SQLException{
+        String sql = "SELECT * FROM post WHERE id = ?";
+        try(PreparedStatement statement = getConnection().prepareStatement(sql)){
+            statement.setInt(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                return Optional.of(extractPostFromResultSet(resultSet));
+            }
+        }
+        return Optional.empty();
+    }
 
 
     @Override

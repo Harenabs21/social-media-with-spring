@@ -31,11 +31,16 @@ public class PostService {
         }
         postRepository.insert(insert);
     }
+    public Optional<Post> getByIdPost(int id) throws SQLException{
+        if(postRepository.findByIdPost(id).isEmpty()){
+            throw new ResourceNotFoundException("Post not found with id"+id);
+        }
+        return postRepository.findByIdPost(id);
+    }
     public void updatePost(int id,Post post) throws SQLException {
-        Post onePost = new Post();
-        Optional<Post> existingPostOptional = postRepository.findById(onePost.getId_account());
+        Optional<Post> existingPostOptional = postRepository.findByIdPost(id);
         if(existingPostOptional.isEmpty()){
-            throw new ResourceNotFoundException("User not found with id"+id);
+            throw new ResourceNotFoundException("Post not found with id"+id);
         }
         else{
             Post existingPost = existingPostOptional.get();
@@ -49,9 +54,8 @@ public class PostService {
         }
     }
     public void deletePost(int id) throws SQLException {
-        Post post = new Post();
-        if(postRepository.findById(post.getId_account()).isEmpty()){
-            throw new ResourceNotFoundException("User not found with id"+post.getId_account());
+        if(postRepository.findByIdPost(id).isEmpty()){
+            throw new ResourceNotFoundException("Post not found with id"+id);
         }
         reactPostRepository.deleteByIdPost(id);
         postRepository.deleteById(id);
