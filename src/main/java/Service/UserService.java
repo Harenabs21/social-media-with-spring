@@ -24,7 +24,7 @@ public class UserService {
     }
     public Optional<User> displayUserById(int id) throws SQLException {
         if(userRepository.findById(id).isEmpty()){
-            System.out.println("user doesn't exist");
+            throw new ResourceNotFoundException("User not found with id"+id);
         }
         return userRepository.findById(id);
     }
@@ -33,14 +33,14 @@ public class UserService {
     }
     public void deleteUser(int id) throws SQLException {
         if(userRepository.findById(id).isEmpty()){
-            System.out.println("user doesn't exist");
+            throw new ResourceNotFoundException("User not found with id"+id);
         }
         userRepository.deleteById(id);
     }
     public void updateUser(int id, User user) throws SQLException {
         Optional<User> existingUserOptional = userRepository.findById(id);
         if(existingUserOptional.isEmpty()){
-            System.out.println("user doesn't exist");
+            throw new ResourceNotFoundException("User not found with id"+id);
         }
         else{
             User existingUser = existingUserOptional.get();
