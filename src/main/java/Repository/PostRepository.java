@@ -57,7 +57,7 @@ public class PostRepository extends GenericRepository<Post> {
     }
     public List<Post> findByIdAccount(int id) throws SQLException{
         List<Post> AllPostOfUser = new ArrayList<>();
-        String sql = "SELECT * FROM post WHERE id = ?";
+        String sql = "SELECT * FROM post WHERE id_account = ? ORDER BY posting_date DESC";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
             statement.setInt(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -72,7 +72,7 @@ public class PostRepository extends GenericRepository<Post> {
 
     @Override
     public Optional<Post> findById(int id) throws SQLException {
-        String sql = "SELECT * FROM post WHERE id_account = ? ORDER BY posting_date DESC";
+        String sql = "SELECT * FROM post WHERE id = ?";
         try(PreparedStatement statement = getConnection().prepareStatement(sql)){
             statement.setInt(1,id);
             ResultSet resultSet = statement.executeQuery();
