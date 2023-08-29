@@ -40,7 +40,7 @@ public class UserService {
         }
         reactPostRepository.deleteByIdUser(id);
         messageRepository.deleteMessageById(id);
-
+        postRepository.deleteByIdUser(id);
         userRepository.deleteById(id);
     }
     public void updateUser(int id, User user) throws SQLException {

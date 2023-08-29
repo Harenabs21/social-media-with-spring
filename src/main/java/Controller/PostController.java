@@ -20,7 +20,7 @@ public class PostController {
         return postService.displayAllPosts();
     }
     @GetMapping("user/{id}")
-    public Optional<Post> PostByIdUser(@PathVariable int id) throws SQLException {
+    public List<Post> PostByIdUser(@PathVariable int id) throws SQLException {
         return postService.displayPostOfUser(id);
     }
     @GetMapping("/{id}")
@@ -38,5 +38,9 @@ public class PostController {
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable int id) throws SQLException {
         postService.deletePost(id);
+    }
+    @DeleteMapping("/user/{id}")
+    public void deleteAllPostOfUser(@PathVariable int id) throws SQLException {
+        postService.deleteAllPost(id);
     }
 }
