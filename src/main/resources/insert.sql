@@ -222,3 +222,26 @@ INSERT INTO message (id_account_sender, id_account_receiver, message_content) VA
 (54, 56, 'How''s the new project going?'),
 (58, 60, 'Let''s go for a hike this Sunday.'),
 (63, 66, 'Any update on the presentation?');
+
+-- react_post mock datas
+INSERT INTO react_post (id_account, id_post, reaction_type, reaction_datetime) VALUES
+(2, 7, 'like', '2023-08-29 10:15:00'),
+(5, 12, 'love', '2023-08-29 11:30:00'),
+(3, 35, 'haha', '2023-08-29 12:45:00'),
+(6, 50, 'who cares?', '2023-08-29 13:00:00'),
+(9, 75, 'angry', '2023-08-29 14:20:00'),
+(11, 22, 'like', '2023-08-29 15:45:00'),
+(15, 40, 'love', '2023-08-29 16:10:00'),
+(18, 60, 'haha', '2023-08-29 17:30:00'),
+(21, 82, 'who cares?', '2023-08-29 18:15:00'),
+(23, 5, 'angry', '2023-08-29 19:00:00'),
+(26, 18, 'like', '2023-08-29 20:30:00'),
+(30, 42, 'love', '2023-08-29 21:05:00'),
+(34, 77, 'haha', '2023-08-29 22:40:00'),
+(37, 92, 'who cares?', '2023-08-29 23:20:00'),
+(41, 14, 'angry', '2023-08-30 00:10:00'),
+(46, 28, 'like', '2023-08-30 01:25:00'),
+(51, 55, 'love', '2023-08-30 02:15:00'),
+(54, 66, 'haha', '2023-08-30 03:30:00'),
+(58, 88, 'who cares?', '2023-08-30 04:00:00'),
+(63, 99, 'angry', '2023-08-30 05:45:00');
