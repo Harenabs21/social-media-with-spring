@@ -19,7 +19,7 @@ public class MessageController {
      return messageService.displayMessagesBetweenTwoUser(idSender,idReceiver);
     }
     @PostMapping("/new")
-    public void sendNewMessage(Message message) throws SQLException {
+    public void sendNewMessage(@RequestBody Message message) throws SQLException {
         messageService.sendMessage(message);
     }
     @PutMapping("/seen/")
