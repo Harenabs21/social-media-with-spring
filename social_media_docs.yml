@@ -1,0 +1,620 @@
+openapi: 3.0.3
+info:
+  title: Social Media API documentation
+  version: '1.0'
+  description: This documents provides a collection of API REST about a social media 
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: User
+    description: action about users 
+  - name: Post
+    description: post of users
+  - name: Message 
+    description: message between users
+  - name: Reactions
+    description: all reactions in any post by any user 
+paths:
+  /users:
+    get:
+      tags:
+        - User
+      summary: display a list of all user
+      responses:
+        '200':
+          $ref: '#/components/responses/200_user'
+        '500':
+          description: internal server error
+    post: 
+      tags:
+        - User
+      summary: add new user
+      requestBody:
+        $ref: '#/components/requestBodies/new_user'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /change password/{id}:
+      put:
+        tags:
+          - User
+        summary: Change the password of user
+        parameters:
+        - $ref: '#/components/parameters/withId'
+        description: This can be only done by user logged in
+        requestBody:
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    password:
+                      type: string
+                      example: 'password_3'
+                     
+        responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+      
+
+              
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: display a user with his id
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_user'
+        '500':
+          description: internal server error
+    
+    put:
+      tags:
+        - User
+      summary: update partially or totally informations about user
+      description: This can be only done by user logged in
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      requestBody:
+        $ref: '#/components/requestBodies/update_user'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+    delete:
+      tags:
+        - User
+      summary: delete the user by his id
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /post/all posts:
+    get:
+      tags:
+        - Post
+      summary: get all posts
+      description: get all posts of all users
+      responses:
+        '200':
+          $ref: '#/components/responses/200_posts'
+        '500':
+          description: Internal server error
+  /post:
+    post:
+      tags:
+        - Post
+      summary: add new post
+      description: this can be only done by user logged in
+      requestBody:
+        $ref: '#/components/requestBodies/new_post'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /post/user/{id}:
+    get:
+      tags:
+        - Post
+      summary: get posts of specific user
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_posts'
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Post
+      summary: delete all post of given user
+      description: this can be only done by the user logged in
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /post/{id}:
+    get:
+      tags:
+        - Post
+      summary: get a post by his id
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_posts'
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Post
+      summary: update partially or totally a post
+      description: this can be only done by the owner of the Post
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      requestBody:
+        $ref: '#/components/requestBodies/update_post'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+    delete:
+      tags:
+        - Post
+      summary: delete a post using his id
+      description: this can be only done by the owner of the Post
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /message/between/:
+    get:
+      tags:
+        - Message
+      summary: display the list of messages between two users from the most recent 
+      description: This can be only view by the sender's user or the receiver's user
+      parameters:
+        - $ref: '#/components/parameters/idSender' 
+        - $ref: '#/components/parameters/idReceiver' 
+      responses:
+        '200':
+          $ref: '#/components/responses/200_message'
+        '500':
+          description: Internal server error
+  /message/new:
+    post:
+      tags:
+        - Message
+      summary: send new message
+      description: the accountSender and accountReceiver cannot be the same
+      requestBody:
+        $ref: '#/components/requestBodies/new_message'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /message/seen/:
+    put:
+      tags:
+        - Message
+      summary: update the seen datetime
+      description: update the seen_datetime  to current timestamp between two users's message
+      parameters:
+        - $ref: '#/components/parameters/idSender' 
+        - $ref: '#/components/parameters/idReceiver'
+      requestBody:
+        $ref: '#/components/requestBodies/update_seenDatetime'
+      responses:
+        '200':
+          description: success, OK!
+        '500':
+          description: internal server error
+  /message/delete/{id}:
+    delete:
+      tags:
+        - Message
+      summary: delete user's message whether sender or receiver
+      description: this can  be only done by the owner of the account
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+  
+  /reactions/{id}:
+    get:
+      tags:
+        - Reactions
+      summary: get all reactions of given post
+      description: the post's id must be existing 
+      parameters:
+      - $ref: '#/components/parameters/withId'
+      responses:
+        '200':
+          $ref: '#/components/responses/200_reactions'
+        '500':
+          description: Internal server error
+  /reactions/new:
+    post:
+      tags:
+        - Reactions
+      summary: add new reaction
+      description: the user's id and the post'sid must be existing
+      requestBody:
+        $ref: '#/components/requestBodies/new_reaction'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+  /reactions/update/:
+    put:
+      tags:
+        - Reactions
+      summary: change the reaction in post
+      description: this can be done by the owner of the reaction and the user's id and the post'sid must be existing
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/postId'
+      requestBody:
+        $ref: '#/components/requestBodies/update_reaction'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+  /reactions/:
+    delete:
+      tags:
+        - Reactions
+      summary: delete a reaction in post
+      description: this can be only done by the owner of reactions
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/postId'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+          
+  /reactions/delete user/{id}:
+    delete:
+      tags:
+        - Reactions
+      summary: delete all reactions of specific user
+      description: this can be done only if we delete a user
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+  /reactions/delete post/{id}:
+    delete:
+      tags:
+        - Reactions
+      summary: delete all reactions in given Post
+      description: this can be only done by the owner of the post
+      parameters:
+        - $ref: '#/components/parameters/withId'
+      responses:
+          '200':
+            description: success, OK!
+          '500':
+            description: internal server error
+components:
+  schemas:
+    users:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: 'John'
+        lastName:
+          type: string
+          example: 'doe'
+        nickname:
+          type: string
+          example: 'john_doe'
+        birthday:
+          type: string
+          format: date
+          example: '1999-06-02'
+        gender:
+          type: string
+          format: char
+          example: 'M'
+          enum:
+            - 'M'
+            - 'F'
+        profilePicture:
+          type: string
+          example: 'john.png'
+        email:
+          type: string
+          format: email
+          example: 'john.doe@gmail.com'
+        password:
+          type: string
+          example: 'password_1'
+    posts:
+      type: object
+      properties:
+        id_post:
+          type: integer
+          example: 2
+        id_account:
+          type: integer
+          example: 1
+        postingDate:
+          type: string
+          format: date
+          example: '2023-05-08'
+        postingTime:
+          type: string
+          format: time
+          example: '12:00:00'
+        postContent:
+          type: string
+          format: text
+          example: 'lorem ipsum dolor esc it '
+        postPhoto:
+          type: string
+          example: 'paysage.jpg'
+    messages:
+      type: object
+      properties:
+        accountSender:
+          type: integer
+          example: 2
+        accountReceiver:
+          type: integer
+          example: 1
+        messageDatetime:
+          type: string
+          format: date-time
+          example: '2023-05-08 12:00:00'
+        messageContent:
+          type: string
+          format: text
+          example: 'Hi, what''s up guy?'
+        seenDatetime:
+          type: string
+          format: date-time
+          example: '2023-05-08 12:20:00'
+    reactions:
+      type: object
+      properties:
+        idUser:
+          type: integer
+          example: 1
+        idPost:
+          type: integer
+          example: 3
+        reactionType:
+          type: string
+          example: 'like'
+          enum:
+            - 'like'
+            - 'love'
+            - 'wow'
+            - 'haha'
+            - 'angry'
+            - 'who cares?'
+        reactionDatetime:
+          type: string
+          format: date-time
+          example: '2023-05-08 13:05:00'
+      
+        
+  responses:
+    200_user:
+      description: success, OK!
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/users'
+    200_posts:
+      description: success, OK!
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/posts'
+    200_message:
+      description: success, OK!
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/messages'
+    200_reactions:
+      description: success, OK!
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/reactions'
+  parameters:
+    withId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    idSender:
+      name: idSender
+      in: query
+      required: true
+      schema:
+        type: integer
+    idReceiver:
+      name: idReceiver
+      in: query
+      schema:
+        type: integer
+    userId:
+      name: userId
+      in: query
+      required: true
+      schema:
+        type: integer
+    postId:
+      name: postId
+      in: query
+      schema:
+        type: integer
+      
+  requestBodies:
+    new_user:
+      content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/users'
+    update_user:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                  example: 'john_D3'
+    new_post:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_account:
+                  type: integer
+                  example: 1
+                postingDate:
+                  type: string
+                  format: date
+                  example: '2023-05-08'
+                postingTime:
+                  type: string
+                  format: time
+                  example: '12:00:00'
+                postContent:
+                  type: string
+                  format: text
+                  example: 'lorem ipsum dolor esc it '
+                postPhoto:
+                  type: string
+                  example: 'paysage.jpg'
+    update_post:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postContent:
+                  type: string
+                  format: text
+                  example: 'blabla '
+                postPhoto:
+                  type: string
+                  example: 'blabla.jpg'
+    new_message:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountSender:
+                  type: integer
+                  example: 2
+                accountReceiver:
+                  type: integer
+                  example: 1
+                messageContent:
+                  type: string
+                  format: text
+                  example: 'Hi, what''s up guy?'
+    update_seenDatetime:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seenDatetime:
+                  type: string
+                  format: date-time
+                  example: '2023-05-08 12:20:00'
+    new_reaction:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idUser:
+                  type: integer
+                  example: 1
+                idPost:
+                  type: integer
+                  example: 3
+                reactionType:
+                  type: string
+                  example: 'like'
+                  enum:
+                    - 'like'
+                    - 'love'
+                    - 'wow'
+                    - 'haha'
+                    - 'angry'
+                    - 'who cares?'
+    update_reaction:
+      content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reactionType:
+                  type: string
+                  example: 'haha'
+                  enum:
+                    - 'like'
+                    - 'love'
+                    - 'wow'
+                    - 'haha'
+                    - 'angry'
+                    - 'who cares?'
+            
+            
+    
+          
